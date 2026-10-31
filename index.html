@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Video Studio</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101322;color:white;font-family:Arial;padding:20px}
+h1{color:#8b9cff}
+.card{background:#20263a;padding:18px;border-radius:14px;margin:15px 0}
+button{background:#5865f2;color:white;border:0;padding:12px;border-radius:9px;margin:5px;cursor:pointer}
+input,textarea{width:100%;padding:12px;margin:10px 0;border-radius:8px}
+.tab{display:flex;flex-wrap:wrap}
+#preview{width:100%;margin-top:12px}
+</style>
+</head>
+<body>
+<h1>🎬 AI Video Studio</h1>
+<p>अपना AI वीडियो बनाएँ</p>
+
+<div class="tab">
+<button onclick="show('text')">Text to Video</button>
+<button onclick="show('image')">Image to Video</button>
+<button onclick="show('shorts')">Video to Shorts</button>
+</div>
+
+<div class="card" id="text">
+<h2>Text to Video</h2>
+<textarea placeholder="अपना वीडियो Prompt लिखें..."></textarea>
+<button onclick="alert('AI generation API बाद में जोड़ेंगे')">Generate Video</button>
+</div>
+
+<div class="card" id="image" hidden>
+<h2>Image to Video</h2>
+<input type="file" accept="image/*" onchange="previewFile(this)">
+<div id="preview"></div>
+<button onclick="alert('AI image-to-video API बाद में जोड़ेंगे')">Generate Video</button>
+</div>
+
+<div class="card" id="shorts" hidden>
+<h2>Long Video to Shorts</h2>
+<input type="file" accept="video/*" onchange="previewFile(this)">
+<div id="preview"></div>
+<button onclick="alert('Automatic AI clipping सुविधा बाद में जोड़ेंगे')">Create Shorts</button>
+</div>
+
+<script>
+function show(id){
+['text','image','shorts'].forEach(x=>{
+document.getElementById(x).hidden=x!==id;
+});
+}
+function previewFile(input){
+let file=input.files[0];
+if(!file)return;
+let url=URL.createObjectURL(file);
+let box=document.getElementById('preview');
+box.innerHTML='';
+let el=document.createElement(file.type.startsWith('image/')?'img':'video');
+el.src=url;
+el.controls=true;
+el.style.maxWidth='100%';
+box.appendChild(el);
+}
+</script>
+</body>
+</html>
